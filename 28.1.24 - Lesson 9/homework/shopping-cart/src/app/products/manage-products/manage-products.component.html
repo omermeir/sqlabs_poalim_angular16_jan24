@@ -1,37 +1,36 @@
 <h2>Manage Products</h2>
 
 <div class="flex">
+  <div>
+    <!-- Action buttons -->
+    <!-- NEW button -->
+    <button (click)="onCreateNewProduct()">Add Product</button>
 
-    <div>
+    <!-- Product stats -->
+    <app-stats *ngIf="products"></app-stats>
 
-        <!-- Action buttons -->
-        <!-- NEW button -->
-        <button (click)="onCreateNewProduct()">Add Product</button>
+    <!-- List of products -->
+    <ul>
+      <li *ngFor="let product of products">
+        {{ product.name }}
+        <button (click)="onSelect(product)">Edit</button>
+      </li>
+    </ul>
+  </div>
 
+  <div>
+    <!-- Product details -->
+    <app-product-edit
+      *ngIf="isEditProduct"
+      [editProduct]="selectedProduct"
+      (updateProductEmitter)="onUpdateProduct($event)"
+    ></app-product-edit>
 
-        <!-- Product stats -->
-        <app-stats *ngIf="products"></app-stats>
-
-
-        <!-- List of products -->
-        <ul>
-            <li *ngFor="let product of products" (click)="onSelect(product)">
-                {{ product.name }}
-            </li>
-        </ul>
-
-    </div>
-
-    <div>
-
-        <!-- Product details -->
-        <app-product-details *ngIf="selectedProduct" [selectedProduct]="selectedProduct"></app-product-details>
-
-
-        <!-- <app-product-new> -->
-        <app-product-new *ngIf="isCreateProduct" (newProductEmitter)="onSaveNewProduct($event)"></app-product-new>
-        <!-- SAVE button ==> @Output -->
-
-    </div>
-
+    <!-- <app-product-new> -->
+    <app-product-new
+      *ngIf="isCreateProduct"
+      (newProductEmitter)="onSaveNewProduct($event)"
+    ></app-product-new>
+    <!-- SAVE button ==> @Output -->
+  </div>
 </div>

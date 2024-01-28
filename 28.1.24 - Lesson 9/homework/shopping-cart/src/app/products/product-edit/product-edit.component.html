@@ -1,6 +1,6 @@
 <div>
-  <form [formGroup]="newProductFrom" (ngSubmit)="onSubmit()">
-    <h2>Add New Product</h2>
+  <form [formGroup]="editProductForm" (ngSubmit)="onSubmit()">
+    <h2>Edit {{ editProduct?.name }}</h2>
     <table>
       <tr>
         <td>
@@ -44,7 +44,9 @@
       </tr>
       <tr>
         <td colspan="2">
-          <button type="submit" [disabled]="!newProductFrom.valid">Save</button>
+          <button type="submit" [disabled]="!editProductForm.valid">
+            Update
+          </button>
         </td>
       </tr>
     </table>

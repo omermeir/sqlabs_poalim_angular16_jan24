@@ -8,7 +8,7 @@ import { Child1Component } from './learning/parent-child/child1/child1.component
 import { Child2Component } from './learning/parent-child/child2/child2.component';
 import { Child3Component } from './learning/parent-child/child3/child3.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import { ProductNewComponent } from './products/product-new/product-new.component';
 import { PlusMinusComponent } from './learning/plus-minus/plus-minus.component';
@@ -24,6 +24,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { MainComponent } from './learning/main/main.component';
 import { FormClassComponent } from './learning/form-class/form-class.component';
 import { ManageProductsComponent } from './products/manage-products/manage-products.component';
+import { ProductEditComponent } from './products/product-edit/product-edit.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -44,14 +46,17 @@ import { ManageProductsComponent } from './products/manage-products/manage-produ
     PagenotfoundComponent,
     MainComponent,
     FormClassComponent,
-    ManageProductsComponent
+    ManageProductsComponent,
+    ProductEditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [provideRouter(routes)],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

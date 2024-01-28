@@ -1,47 +1,59 @@
 <div class="flex">
-
-    <div><h2>My Supermarket</h2></div>
-    <div>
-        <h3 class="title-shopping-cart">Shopping Cart <span>({{ shoppingCartProducts?.length }})</span></h3>
-    </div>
-
+  <div><h2>My Supermarket</h2></div>
+  <div>
+    <h3 class="title-shopping-cart">
+      Shopping Cart <span>({{ shoppingCartProducts?.length }})</span>
+    </h3>
+  </div>
 </div>
 
 <div class="flex">
+  <div>
+    <!-- Product stats -->
+    <app-stats *ngIf="products"></app-stats>
 
-    <div>
+    <!-- List of products -->
+    <ul class="product-list">
+      <li
+        *ngFor="let product of products"
+        (click)="onSelect(product)"
+        (mouseenter)="hoveredProduct = product"
+      >
+        <div
+          [ngClass]="{
+            'product-line': true,
+            'product-line-in-cart': isProductInCart(product)
+          }"
+        >
+          <div>{{ product.name }}</div>
+          <div>{{ product.price | currency : "₪" }}</div>
+          <div *ngIf="hoveredProduct?.id === product.id">
+            <button
+              *ngIf="!isProductInCart(product)"
+              (click)="addToCart(product)"
+            >
+              Add To Cart
+            </button>
+            <button
+              *ngIf="isProductInCart(product)"
+              (click)="removeFromCart(product)"
+            >
+              Remove From Cart
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-        <!-- Product stats -->
-        <app-stats *ngIf="products"></app-stats>
-
-
-        <!-- List of products -->
-        <ul class="product-list">
-            <li *ngFor="let product of products" (click)="onSelect(product)" (mouseenter)="hoveredProduct = product">
-
-                <div [ngClass]="{'product-line': true, 'product-line-in-cart': isProductInCart(product)}">
-                    <div>{{ product.name }}</div>
-                    <div>{{ product.price }}</div>
-                    <div *ngIf="hoveredProduct?.id === product.id">
-                        <button *ngIf="!isProductInCart(product)" (click)="addToCart(product)">Add To Cart</button>
-                        <button *ngIf="isProductInCart(product)" (click)="removeFromCart(product)">Remove From Cart</button>
-                    </div>
-                </div>
-            </li>
-        </ul>
-
-    </div>
-
-    <div>
-
-        <!-- Product details -->
-        <app-product-details
-            *ngIf="selectedProduct"
-            [selectedProduct]="selectedProduct"
-            [isProductInCart]="isProductInCart(selectedProduct)"
-            (addToCartEmitter)="addToCart($event)"
-            (removeFromCartEmitter)="removeFromCart($event)"></app-product-details>
-
-    </div>
-
+  <div>
+    <!-- Product details -->
+    <app-product-details
+      *ngIf="selectedProduct"
+      [selectedProduct]="selectedProduct"
+      [isProductInCart]="isProductInCart(selectedProduct)"
+      (addToCartEmitter)="addToCart($event)"
+      (removeFromCartEmitter)="removeFromCart($event)"
+    ></app-product-details>
+  </div>
 </div>
